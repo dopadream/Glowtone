@@ -12,7 +12,8 @@ import net.fabricmc.api.Environment;
 import net.frozenblock.glowtone.GlowtoneConstants;
 import net.frozenblock.glowtone.mixin.client.item.RenderTypeInvokerMixin;
 import net.minecraft.client.renderer.BindGroupLayouts;
-import net.minecraft.client.renderer.rendertype.OutputTarget;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.client.renderer.oit.OitPipelineSet;
 import net.minecraft.client.renderer.rendertype.RenderSetup;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.resources.Identifier;
@@ -25,13 +26,15 @@ public final class GlowtoneItemRenderTypes {
 	public static final RenderPipeline ITEM_CUTOUT_UNSHADED = RenderPipeline.builder()
 		.withLocation(GlowtoneConstants.id("pipeline/item_cutout_unshaded"))
 		.withBindGroupLayout(BindGroupLayouts.GLOBALS)
-		.withBindGroupLayout(BindGroupLayouts.MATRICES_PROJECTION)
+		.withBindGroupLayout(BindGroupLayouts.PROJECTION)
+		.withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
 		.withBindGroupLayout(BindGroupLayouts.FOG)
 		.withBindGroupLayout(BindGroupLayouts.SAMPLER0_SAMPLER1_SAMPLER2)
 		.withVertexShader("core/entity")
 		.withFragmentShader("core/entity")
 		.withShaderDefine("NO_CARDINAL_LIGHTING")
 		.withShaderDefine("ALPHA_CUTOUT", 0.1F)
+		.withColorTargetState(ColorTargetState.DEFAULT)
 		.withVertexBinding(0, DefaultVertexFormat.ENTITY)
 		.withPrimitiveTopology(PrimitiveTopology.QUADS)
 		.withDepthStencilState(DepthStencilState.DEFAULT)
@@ -40,7 +43,8 @@ public final class GlowtoneItemRenderTypes {
 	public static final RenderPipeline ITEM_TRANSLUCENT_UNSHADED = RenderPipeline.builder()
 		.withLocation(GlowtoneConstants.id("pipeline/item_translucent_unshaded"))
 		.withBindGroupLayout(BindGroupLayouts.GLOBALS)
-		.withBindGroupLayout(BindGroupLayouts.MATRICES_PROJECTION)
+		.withBindGroupLayout(BindGroupLayouts.PROJECTION)
+		.withBindGroupLayout(BindGroupLayouts.DYNAMIC_TRANSFORMS)
 		.withBindGroupLayout(BindGroupLayouts.FOG)
 		.withBindGroupLayout(BindGroupLayouts.SAMPLER0_SAMPLER1_SAMPLER2)
 		.withVertexShader("core/entity")
@@ -51,6 +55,12 @@ public final class GlowtoneItemRenderTypes {
 		.withVertexBinding(0, DefaultVertexFormat.ENTITY)
 		.withPrimitiveTopology(PrimitiveTopology.QUADS)
 		.withDepthStencilState(DepthStencilState.DEFAULT)
+		.build();
+
+	private static final OitPipelineSet ITEM_TRANSLUCENT_UNSHADED_OIT = OitPipelineSet.builder(
+			"glowtone_item_translucent_unshaded", RenderPipeline.builder(RenderPipelines.OIT_ITEM_SNIPPET).withShaderDefine("NO_CARDINAL_LIGHTING")
+		)
+		.withAccumulateModifier(accumulate -> accumulate.withBindGroupLayout(BindGroupLayouts.SAMPLER1).withBindGroupLayout(BindGroupLayouts.SAMPLER2))
 		.build();
 
 	private static final Function<Identifier, RenderType> ITEM_CUTOUT_UNSHADED_FN = Util.memoize(
@@ -71,7 +81,7 @@ public final class GlowtoneItemRenderTypes {
 			"glowtone_item_translucent_unshaded",
 			RenderSetup.builder(ITEM_TRANSLUCENT_UNSHADED)
 				.withTexture("Sampler0", texture)
-				.setOutputTarget(OutputTarget.ITEM_ENTITY_TARGET)
+				.setOitPipelines(ITEM_TRANSLUCENT_UNSHADED_OIT)
 				.useLightmap()
 				.useOverlay()
 				.affectsCrumbling()

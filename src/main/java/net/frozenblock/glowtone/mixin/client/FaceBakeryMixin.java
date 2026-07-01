@@ -76,7 +76,8 @@ public class FaceBakeryMixin {
 		}
 
 		RenderType itemRenderType = materialInfo.itemRenderType();
-		if (GlowtoneConstants.GLOWTONE_SHADING && !shade) {
+
+		if (GlowtoneConstants.GLOWTONE_SHADING && lightEmission == 15) {
 			final RenderType unshadedItemRenderType = glowtone$unshadedItemRenderType(itemRenderType);
 			if (unshadedItemRenderType != null && unshadedItemRenderType != itemRenderType) {
 				itemRenderType = unshadedItemRenderType;
@@ -91,6 +92,8 @@ public class FaceBakeryMixin {
 				materialInfo.sprite(),
 				materialInfo.layer(),
 				itemRenderType,
+				materialInfo.itemGlintRenderType(),
+				materialInfo.itemGlintSpecialRenderType(),
 				materialInfo.tintIndex(),
 				shade,
 				lightEmission

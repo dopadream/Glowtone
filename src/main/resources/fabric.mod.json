@@ -29,7 +29,7 @@
   "accessWidener": "glowtone.classtweaker",
   "depends": {
     "fabric-api": "*",
-    "minecraft": "${minecraft_version}"
+    "minecraft": "*"
   },
   "suggests": {
     "cloth-config": "*"
