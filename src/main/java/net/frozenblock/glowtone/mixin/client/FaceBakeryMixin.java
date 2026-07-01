@@ -23,11 +23,16 @@ import java.util.Optional;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.frozenblock.glowtone.GlowtoneConstants;
+import net.frozenblock.glowtone.client.render.item.GlowtoneItemRenderTypes;
 import net.frozenblock.glowtone.resources.metadata.EmissiveMetadataSection;
+import net.minecraft.client.renderer.Sheets;
+import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.texture.SpriteContents;
+import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.cuboid.FaceBakery;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -70,17 +75,35 @@ public class FaceBakeryMixin {
 			isModified = isModified || wasShaded != shade;
 		}
 
+		RenderType itemRenderType = materialInfo.itemRenderType();
+		if (GlowtoneConstants.GLOWTONE_SHADING && !shade) {
+			final RenderType unshadedItemRenderType = glowtone$unshadedItemRenderType(itemRenderType);
+			if (unshadedItemRenderType != null && unshadedItemRenderType != itemRenderType) {
+				itemRenderType = unshadedItemRenderType;
+				isModified = true;
+			}
+		}
+
 		if (!isModified) return;
 
 		materialInfoRef.set(
 			new BakedQuad.MaterialInfo(
 				materialInfo.sprite(),
 				materialInfo.layer(),
-				materialInfo.itemRenderType(),
+				itemRenderType,
 				materialInfo.tintIndex(),
 				shade,
 				lightEmission
 			)
 		);
+	}
+
+	@Unique
+	private static RenderType glowtone$unshadedItemRenderType(RenderType original) {
+		if (original == Sheets.cutoutBlockItemSheet()) return GlowtoneItemRenderTypes.itemCutoutUnshaded(TextureAtlas.LOCATION_BLOCKS);
+		if (original == Sheets.translucentBlockItemSheet()) return GlowtoneItemRenderTypes.itemTranslucentUnshaded(TextureAtlas.LOCATION_BLOCKS);
+		if (original == Sheets.cutoutItemSheet()) return GlowtoneItemRenderTypes.itemCutoutUnshaded(TextureAtlas.LOCATION_ITEMS);
+		if (original == Sheets.translucentItemSheet()) return GlowtoneItemRenderTypes.itemTranslucentUnshaded(TextureAtlas.LOCATION_ITEMS);
+		return null;
 	}
 }
