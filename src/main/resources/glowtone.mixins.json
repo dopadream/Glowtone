@@ -15,6 +15,7 @@
     "client.ItemLayerKeyMixin",
     "client.MaterialBakerMixin",
     "client.ModelManagerMixin",
+    "client.SimpleModelWrapperMixin",
     "client.SpriteResourceLoaderMixin",
     "client.UnbakedCuboidGeometryMixin",
     "client.block.BlocksMixin",
