@@ -31,6 +31,7 @@ import net.minecraft.client.renderer.texture.SpriteContents;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.resources.model.cuboid.FaceBakery;
 import net.minecraft.client.resources.model.geometry.BakedQuad;
+import net.minecraft.core.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -50,7 +51,7 @@ public class FaceBakeryMixin {
 		@Local(argsOnly = true) LocalRef<BakedQuad.MaterialInfo> materialInfoRef
 	) {
 		final BakedQuad.MaterialInfo materialInfo = materialInfoRef.get();
-		boolean shade = materialInfo.shade();
+		boolean shade = materialInfo.shadeDirectionOverride() == null;
 		int lightEmission = materialInfo.lightEmission();
 		boolean isModified = false;
 
@@ -95,7 +96,7 @@ public class FaceBakeryMixin {
 				materialInfo.itemGlintRenderType(),
 				materialInfo.itemGlintSpecialRenderType(),
 				materialInfo.tintIndex(),
-				shade,
+				shade ? null : Direction.UP,
 				lightEmission
 			)
 		);

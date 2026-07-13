@@ -65,7 +65,7 @@ public class ItemLayerKeyMixin {
 				emissiveMaterial,
 				emissiveMaterial.sprite().transparency(),
 				materialInfo.tintIndex(),
-				materialInfo.shade(),
+				materialInfo.shadeDirectionOverride(),
 				materialInfo.lightEmission()
 			)
 		);

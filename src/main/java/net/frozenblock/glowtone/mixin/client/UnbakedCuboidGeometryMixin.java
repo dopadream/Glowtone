@@ -82,7 +82,7 @@ public abstract class UnbakedCuboidGeometryMixin {
 		method = "bake(Ljava/util/List;Lnet/minecraft/client/resources/model/sprite/TextureSlots;Lnet/minecraft/client/resources/model/ModelBaker;Lnet/minecraft/client/renderer/block/dispatch/ModelState;Lnet/minecraft/client/resources/model/ModelDebugName;)Lnet/minecraft/client/resources/model/geometry/QuadCollection;",
 		at = @At(
 			value = "INVOKE",
-			target = "Lnet/minecraft/client/resources/model/cuboid/FaceBakery;bakeQuad(Lnet/minecraft/client/resources/model/ModelBaker;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lnet/minecraft/client/resources/model/cuboid/CuboidFace;Lnet/minecraft/client/resources/model/sprite/Material$Baked;Lnet/minecraft/core/Direction;Lnet/minecraft/client/renderer/block/dispatch/ModelState;Lnet/minecraft/client/resources/model/cuboid/CuboidRotation;ZI)Lnet/minecraft/client/resources/model/geometry/BakedQuad;"
+			target = "Lnet/minecraft/client/resources/model/cuboid/FaceBakery;bakeQuad(Lnet/minecraft/client/resources/model/ModelBaker;Lorg/joml/Vector3fc;Lorg/joml/Vector3fc;Lnet/minecraft/client/resources/model/cuboid/CuboidFace;Lnet/minecraft/client/resources/model/sprite/Material$Baked;Lnet/minecraft/core/Direction;Lnet/minecraft/client/renderer/block/dispatch/ModelState;Lnet/minecraft/client/resources/model/cuboid/CuboidRotation;Lnet/minecraft/core/Direction;I)Lnet/minecraft/client/resources/model/geometry/BakedQuad;"
 		)
 	)
 	private static BakedQuad glowtone$bakeEmissiveQuad(
@@ -94,18 +94,18 @@ public abstract class UnbakedCuboidGeometryMixin {
 		Direction facing,
 		ModelState modelState,
 		@Nullable CuboidRotation elementRotation,
-		boolean shade,
+		@Nullable Direction shadeDirectionOverride,
 		int lightEmission,
 		Operation<BakedQuad> original,
 		@Share("glowtone$emissiveMaterial") LocalRef<Material.Baked> emissiveMaterialRef,
 		@Share("glowtone$emissiveQuad") LocalRef<BakedQuad> emissiveQuadRef
 	) {
-		final BakedQuad originalQuad = original.call(modelBaker, from, _to, face, material, facing, modelState, elementRotation, shade, lightEmission);
+		final BakedQuad originalQuad = original.call(modelBaker, from, _to, face, material, facing, modelState, elementRotation, shadeDirectionOverride, lightEmission);
 
 		final Material.Baked emissiveMaterial = emissiveMaterialRef.get();
 		if (emissiveMaterial == null) return originalQuad;
 
-		final BakedQuad emissiveQuad = original.call(modelBaker, from, _to, face, emissiveMaterial, facing, modelState, elementRotation, shade, lightEmission);
+		final BakedQuad emissiveQuad = original.call(modelBaker, from, _to, face, emissiveMaterial, facing, modelState, elementRotation, shadeDirectionOverride, lightEmission);
 		emissiveQuadRef.set(emissiveQuad);
 
 		return originalQuad;
