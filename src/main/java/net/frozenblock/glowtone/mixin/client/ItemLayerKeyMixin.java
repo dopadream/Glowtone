@@ -51,7 +51,7 @@ public class ItemLayerKeyMixin {
 	) {
 		original.call(builder, interner, modelState, materialInfo);
 
-		if (!GlowtoneConstants.GLOWTONE_EMISSIVES) return;
+		if (!GlowtoneConstants.GLOWTONE_REPLACEMENTS) return;
 
 		final TextureAtlasSprite sprite = materialInfo.sprite();
 		final Identifier location = sprite.contents().name();

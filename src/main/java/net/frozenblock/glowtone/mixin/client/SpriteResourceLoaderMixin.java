@@ -49,7 +49,7 @@ public interface SpriteResourceLoaderMixin {
 		@Local(argsOnly = true) Identifier spriteLocation,
 		@Local(name = "image") NativeImage image
 	) {
-		if (!GlowtoneConstants.GLOWTONE_EMISSIVES) return;
+		if (!GlowtoneConstants.GLOWTONE_REPLACEMENTS) return;
 		if (image == null) return;
 		if (!spriteLocation.getPath().endsWith("_glowtone_emissive")) return;
 

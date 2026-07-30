@@ -37,10 +37,10 @@ public class ModelManagerMixin {
 			target = "Lnet/minecraft/server/packs/resources/PreparableReloadListener$SharedState;resourceManager()Lnet/minecraft/server/packs/resources/ResourceManager;"
 		)
 	)
-	public ResourceManager glowtone$toggleShading(ResourceManager resourceManager) {
-		GlowtoneConstants.GLOWTONE_EMISSIVES = resourceManager.listPacks().anyMatch(packResources -> {
+	public ResourceManager glowtone$toggleFeatures(ResourceManager resourceManager) {
+		GlowtoneConstants.GLOWTONE_REPLACEMENTS = resourceManager.listPacks().anyMatch(packResources -> {
 			if (!packResources.knownPackInfo().isPresent()) return false;
-			return packResources.knownPackInfo().get().id().equals(GlowtoneConstants.string("glowtone_emissives"));
+			return packResources.knownPackInfo().get().id().equals(GlowtoneConstants.string("glowtone_replacements"));
 		});
 		GlowtoneConstants.GLOWTONE_SHADING = resourceManager.listPacks().anyMatch(packResources -> {
 			if (!packResources.knownPackInfo().isPresent()) return false;

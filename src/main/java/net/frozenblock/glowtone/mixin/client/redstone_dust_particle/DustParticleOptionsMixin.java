@@ -56,6 +56,6 @@ public class DustParticleOptionsMixin implements GlowtoneParticle {
 
 	@Inject(method = "<init>", at = @At("TAIL"))
 	public void glowtone$makeBaseRedstoneParticlesEmissive(int color, float scale, CallbackInfo info) {
-		if (GlowtoneConstants.GLOWTONE_EMISSIVES && color == REDSTONE_PARTICLE_COLOR) this.glowtone$setLightEmission(LightEngine.MAX_LEVEL);
+		if (GlowtoneConstants.GLOWTONE_REPLACEMENTS && color == REDSTONE_PARTICLE_COLOR) this.glowtone$setLightEmission(LightEngine.MAX_LEVEL);
 	}
 }

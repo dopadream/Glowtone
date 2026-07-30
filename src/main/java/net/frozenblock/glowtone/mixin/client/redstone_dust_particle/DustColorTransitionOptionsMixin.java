@@ -56,7 +56,7 @@ public class DustColorTransitionOptionsMixin implements GlowtoneParticle {
 
 	@Inject(method = "<clinit>", at = @At("TAIL"))
 	private static void glowtone$makeSculkToRedstoneRedstoneParticlesEmissive(CallbackInfo info) {
-		if (!GlowtoneConstants.GLOWTONE_EMISSIVES) return;
+		if (!GlowtoneConstants.GLOWTONE_REPLACEMENTS) return;
 		SCULK_TO_REDSTONE.glowtone$setLightEmission(LightEngine.MAX_LEVEL);
 	}
 }

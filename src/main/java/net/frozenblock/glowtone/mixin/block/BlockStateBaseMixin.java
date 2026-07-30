@@ -30,7 +30,7 @@ public class BlockStateBaseMixin {
 	@ModifyReturnValue(method = "getLightEmission", at = @At("RETURN"))
 	public int glowtone$newRedstoneOreLightEmission(int lightEmission) {
 		if (lightEmission == 0) return lightEmission;
-		if (BlockBehaviour.BlockStateBase.class.cast(this).getBlock() instanceof RedStoneOreBlock && GlowtoneConstants.GLOWTONE_EMISSIVES) return 0;
+		if (BlockBehaviour.BlockStateBase.class.cast(this).getBlock() instanceof RedStoneOreBlock && GlowtoneConstants.GLOWTONE_REPLACEMENTS) return 0;
 		return lightEmission;
 	}
 

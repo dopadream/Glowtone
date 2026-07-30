@@ -55,7 +55,7 @@ public class FaceBakeryMixin {
 		int lightEmission = materialInfo.lightEmission();
 		boolean isModified = false;
 
-		if (GlowtoneConstants.GLOWTONE_EMISSIVES) {
+		if (GlowtoneConstants.GLOWTONE_REPLACEMENTS) {
 			final SpriteContents contents = materialInfo.sprite().contents();
 
 			final Optional<EmissiveMetadataSection> optionalEmissiveMetadata = contents.getAdditionalMetadata(EmissiveMetadataSection.TYPE);
@@ -77,11 +77,25 @@ public class FaceBakeryMixin {
 		}
 
 		RenderType itemRenderType = materialInfo.itemRenderType();
+		RenderType itemGlintRenderType = materialInfo.itemGlintRenderType();
+		RenderType itemGlintSpecialRenderType = materialInfo.itemGlintSpecialRenderType();
 
 		if (GlowtoneConstants.GLOWTONE_SHADING && lightEmission == 15) {
 			final RenderType unshadedItemRenderType = glowtone$unshadedItemRenderType(itemRenderType);
 			if (unshadedItemRenderType != null && unshadedItemRenderType != itemRenderType) {
 				itemRenderType = unshadedItemRenderType;
+				isModified = true;
+			}
+
+			final RenderType unshadedItemGlintRenderType = glowtone$unshadedItemGlintRenderType(itemGlintRenderType);
+			if (unshadedItemGlintRenderType != null && unshadedItemGlintRenderType != itemGlintRenderType) {
+				itemGlintRenderType = unshadedItemGlintRenderType;
+				isModified = true;
+			}
+
+			final RenderType unshadedItemGlintSpecialRenderType = glowtone$unshadedItemGlintSpecialRenderType(itemGlintSpecialRenderType);
+			if (unshadedItemGlintSpecialRenderType != null && unshadedItemGlintSpecialRenderType != itemGlintSpecialRenderType) {
+				itemGlintSpecialRenderType = unshadedItemGlintSpecialRenderType;
 				isModified = true;
 			}
 		}
@@ -93,8 +107,8 @@ public class FaceBakeryMixin {
 				materialInfo.sprite(),
 				materialInfo.layer(),
 				itemRenderType,
-				materialInfo.itemGlintRenderType(),
-				materialInfo.itemGlintSpecialRenderType(),
+				itemGlintRenderType,
+				itemGlintSpecialRenderType,
 				materialInfo.tintIndex(),
 				shade ? null : Direction.UP,
 				lightEmission
@@ -108,6 +122,24 @@ public class FaceBakeryMixin {
 		if (original == Sheets.translucentBlockItemSheet()) return GlowtoneItemRenderTypes.itemTranslucentUnshaded(TextureAtlas.LOCATION_BLOCKS);
 		if (original == Sheets.cutoutItemSheet()) return GlowtoneItemRenderTypes.itemCutoutUnshaded(TextureAtlas.LOCATION_ITEMS);
 		if (original == Sheets.translucentItemSheet()) return GlowtoneItemRenderTypes.itemTranslucentUnshaded(TextureAtlas.LOCATION_ITEMS);
+		return null;
+	}
+
+	@Unique
+	private static RenderType glowtone$unshadedItemGlintRenderType(RenderType original) {
+		if (original == Sheets.cutoutBlockItemGlintSheet()) return GlowtoneItemRenderTypes.itemCutoutGlintUnshaded(TextureAtlas.LOCATION_BLOCKS);
+		if (original == Sheets.translucentBlockItemGlintSheet()) return GlowtoneItemRenderTypes.itemTranslucentGlintUnshaded(TextureAtlas.LOCATION_BLOCKS);
+		if (original == Sheets.cutoutItemGlintSheet()) return GlowtoneItemRenderTypes.itemCutoutGlintUnshaded(TextureAtlas.LOCATION_ITEMS);
+		if (original == Sheets.translucentItemGlintSheet()) return GlowtoneItemRenderTypes.itemTranslucentGlintUnshaded(TextureAtlas.LOCATION_ITEMS);
+		return null;
+	}
+
+	@Unique
+	private static RenderType glowtone$unshadedItemGlintSpecialRenderType(RenderType original) {
+		if (original == Sheets.cutoutBlockItemGlintSpecialSheet()) return GlowtoneItemRenderTypes.itemCutoutGlintSpecialUnshaded(TextureAtlas.LOCATION_BLOCKS);
+		if (original == Sheets.translucentBlockItemGlintSpecialSheet()) return GlowtoneItemRenderTypes.itemTranslucentGlintSpecialUnshaded(TextureAtlas.LOCATION_BLOCKS);
+		if (original == Sheets.cutoutItemGlintSpecialSheet()) return GlowtoneItemRenderTypes.itemCutoutGlintSpecialUnshaded(TextureAtlas.LOCATION_ITEMS);
+		if (original == Sheets.translucentItemGlintSpecialSheet()) return GlowtoneItemRenderTypes.itemTranslucentGlintSpecialUnshaded(TextureAtlas.LOCATION_ITEMS);
 		return null;
 	}
 }

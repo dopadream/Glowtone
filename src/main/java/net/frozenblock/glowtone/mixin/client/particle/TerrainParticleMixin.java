@@ -69,7 +69,7 @@ public class TerrainParticleMixin implements GlowtoneEmissiveParticle, GlowtoneP
 	private void glowtone$findEmissiveSprite(
 		ClientLevel level, double x, double y, double z, double xa, double ya, double za, BlockState blockState, BlockPos pos, CallbackInfo ci
 	) {
-		if (!GlowtoneConstants.GLOWTONE_EMISSIVES) return;
+		if (!GlowtoneConstants.GLOWTONE_REPLACEMENTS) return;
 
 		final SingleQuadParticleAccessor accessor = (SingleQuadParticleAccessor) this;
 		final TextureAtlasSprite sprite = accessor.glowtone$getSprite();

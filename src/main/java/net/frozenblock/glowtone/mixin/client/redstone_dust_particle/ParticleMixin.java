@@ -34,7 +34,7 @@ public class ParticleMixin {
 
 	@ModifyReturnValue(method = "getLightCoords", at = @At("RETURN"))
 	public int glowtone$renderDustWithEmission(int original) {
-		if (!GlowtoneConstants.GLOWTONE_EMISSIVES || !(Particle.class.cast(this) instanceof GlowtoneParticle glowingInterface)) return original;
+		if (!GlowtoneConstants.GLOWTONE_REPLACEMENTS || !(Particle.class.cast(this) instanceof GlowtoneParticle glowingInterface)) return original;
 
 		final int emission = glowingInterface.glowtone$getLightEmission();
 		if (emission == 0) return original;

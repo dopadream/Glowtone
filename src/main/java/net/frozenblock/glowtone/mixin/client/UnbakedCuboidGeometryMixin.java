@@ -64,7 +64,7 @@ public abstract class UnbakedCuboidGeometryMixin {
 	) {
 		emissiveMaterialRef.set(null);
 		emissiveQuadRef.set(null);
-		if (!GlowtoneConstants.GLOWTONE_EMISSIVES) return original;
+		if (!GlowtoneConstants.GLOWTONE_REPLACEMENTS) return original;
 
 		final TextureAtlasSprite sprite = original.sprite();
 		final Identifier location = sprite.contents().name();

@@ -10,13 +10,16 @@
     "block.BlockStateBaseMixin"
   ],
   "client": [
+    "client.AnimationStateMixin",
     "client.AtlasConfigMixin",
     "client.FaceBakeryMixin",
     "client.ItemLayerKeyMixin",
     "client.MaterialBakerMixin",
+    "client.MinecraftAnimationMixin",
     "client.ModelManagerMixin",
     "client.SimpleModelWrapperMixin",
     "client.SpriteResourceLoaderMixin",
+    "client.TextureAtlasAccessor",
     "client.UnbakedCuboidGeometryMixin",
     "client.block.BlocksMixin",
     "client.item.RenderTypeInvokerMixin",

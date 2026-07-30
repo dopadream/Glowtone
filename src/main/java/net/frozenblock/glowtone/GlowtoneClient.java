@@ -41,9 +41,9 @@ public final class GlowtoneClient implements ClientModInitializer {
 		);
 
 		ResourceLoader.registerBuiltinPack(
-			GlowtoneConstants.id("glowtone_emissives"),
+			GlowtoneConstants.id("glowtone_replacements"),
 			modContainer,
-			Component.translatable("pack.glowtone.glowtone_emissives"),
+			Component.translatable("pack.glowtone.glowtone_replacements"),
 			PackActivationType.DEFAULT_ENABLED
 		);
 	}

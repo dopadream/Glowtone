@@ -47,7 +47,7 @@ public class DustColorTransitionParticleMixin implements GlowtoneParticle {
 		SpriteSet sprites,
 		CallbackInfo info
 	) {
-		if (!GlowtoneConstants.GLOWTONE_EMISSIVES) return;
+		if (!GlowtoneConstants.GLOWTONE_REPLACEMENTS) return;
 		this.glowtone$lightEmission = options.glowtone$getLightEmission();
 	}
 

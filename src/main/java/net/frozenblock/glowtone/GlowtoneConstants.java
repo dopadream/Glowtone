@@ -25,7 +25,7 @@ public final class GlowtoneConstants {
 	public static final String PROJECT_ID = "Glowtone";
 	public static final String MOD_ID = "glowtone";
 
-	public static boolean GLOWTONE_EMISSIVES = false;
+	public static boolean GLOWTONE_REPLACEMENTS = false;
 	public static boolean GLOWTONE_SHADING = false;
 
 	public static Identifier id(String path) {

@@ -48,7 +48,7 @@ public class RedstoneWireBlockMixin {
 		DustParticleOptions original,
 		@Local(argsOnly = true) int color
 	) {
-		if (!GlowtoneConstants.GLOWTONE_EMISSIVES) return original;
+		if (!GlowtoneConstants.GLOWTONE_REPLACEMENTS) return original;
 
 		for (int i = 1; i <= 15; i++) {
 			if (COLORS[i] != color) continue;

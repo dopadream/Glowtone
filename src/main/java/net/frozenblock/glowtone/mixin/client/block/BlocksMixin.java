@@ -53,6 +53,6 @@ public class BlocksMixin {
 	private static BlockBehaviour.Properties glowtone$fixedMagmaRendering(
 		BlockBehaviour.Properties instance, Predicate<BlockState> emissiveRendering, Operation<BlockBehaviour.Properties> original
 	) {
-		return original.call(instance, (Predicate<BlockState>) state -> !GlowtoneConstants.GLOWTONE_EMISSIVES);
+		return original.call(instance, (Predicate<BlockState>) state -> !GlowtoneConstants.GLOWTONE_REPLACEMENTS);
 	}
 }
