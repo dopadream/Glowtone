@@ -57,10 +57,20 @@ public final class GlowtoneConstants {
 	@Nullable
 	public static <T> T findEmissiveVariant(Identifier baseLocation, Function<Identifier, T> lookup, Predicate<T> isValid) {
 		for (String suffix : EMISSIVE_SUFFIXES) {
-			final T candidate = lookup.apply(baseLocation.withSuffix(suffix));
+			final T candidate = lookup.apply(withEmissiveSuffix(baseLocation, suffix));
 			if (isValid.test(candidate)) return candidate;
 		}
 		return null;
+	}
+
+	private static Identifier withEmissiveSuffix(Identifier location, String suffix) {
+		final String path = location.getPath();
+		final int lastSlash = path.lastIndexOf('/');
+		final int lastDot = path.lastIndexOf('.');
+		if (lastDot > lastSlash) {
+			return location.withPath(path.substring(0, lastDot) + suffix + path.substring(lastDot));
+		}
+		return location.withSuffix(suffix);
 	}
 
 	private GlowtoneConstants() {}

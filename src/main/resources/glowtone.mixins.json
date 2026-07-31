@@ -22,6 +22,7 @@
     "client.TextureAtlasAccessor",
     "client.UnbakedCuboidGeometryMixin",
     "client.block.BlocksMixin",
+    "client.entity.LivingEntityRendererMixin",
     "client.item.RenderTypeInvokerMixin",
     "client.particle.ParticleInvokerMixin",
     "client.particle.SingleQuadParticleAccessor",

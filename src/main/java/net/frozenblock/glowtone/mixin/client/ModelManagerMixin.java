@@ -21,6 +21,7 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.frozenblock.glowtone.GlowtoneConstants;
+import net.frozenblock.glowtone.client.render.entity.GlowtoneEmissiveLayer;
 import net.minecraft.client.resources.model.ModelManager;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -46,6 +47,7 @@ public class ModelManagerMixin {
 			if (!packResources.knownPackInfo().isPresent()) return false;
 			return packResources.knownPackInfo().get().id().equals(GlowtoneConstants.string("glowtone_shading"));
 		});
+		GlowtoneEmissiveLayer.clearCache();
 		return resourceManager;
 	}
 }
