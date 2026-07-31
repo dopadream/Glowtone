@@ -68,10 +68,13 @@ public abstract class UnbakedCuboidGeometryMixin {
 
 		final TextureAtlasSprite sprite = original.sprite();
 		final Identifier location = sprite.contents().name();
-		final Identifier emissiveLocation = location.withSuffix("_glowtone_emissive");
 
-		final Material.Baked emissiveMaterial = modelBaker.materials().get(new Material(emissiveLocation), name);
-		if (emissiveMaterial != null && !emissiveMaterial.sprite().contents().name().equals(MissingTextureAtlasSprite.getLocation())) {
+		final Material.Baked emissiveMaterial = GlowtoneConstants.findEmissiveVariant(
+			location,
+			emissiveLocation -> modelBaker.materials().get(new Material(emissiveLocation), name),
+			candidate -> !candidate.sprite().contents().name().equals(MissingTextureAtlasSprite.getLocation())
+		);
+		if (emissiveMaterial != null) {
 			emissiveMaterialRef.set(emissiveMaterial);
 		}
 

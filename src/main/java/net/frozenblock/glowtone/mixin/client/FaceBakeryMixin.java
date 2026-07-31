@@ -64,7 +64,7 @@ public class FaceBakeryMixin {
 				shade = emissiveMetadata.shade().orElse(shade);
 				lightEmission = emissiveMetadata.lightEmission();
 				isModified = true;
-			} else if (contents.name().getPath().endsWith("_glowtone_emissive")) {
+			} else if (GlowtoneConstants.isEmissivePath(contents.name().getPath())) {
 				lightEmission = 15;
 				isModified = true;
 			}

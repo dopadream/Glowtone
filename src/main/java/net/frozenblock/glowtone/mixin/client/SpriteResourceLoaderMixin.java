@@ -51,7 +51,7 @@ public interface SpriteResourceLoaderMixin {
 	) {
 		if (!GlowtoneConstants.GLOWTONE_REPLACEMENTS) return;
 		if (image == null) return;
-		if (!spriteLocation.getPath().endsWith("_glowtone_emissive")) return;
+		if (!GlowtoneConstants.isEmissivePath(spriteLocation.getPath())) return;
 
 		try {
 			final int[] pixels = image.getPixels();

@@ -55,10 +55,13 @@ public class ItemLayerKeyMixin {
 
 		final TextureAtlasSprite sprite = materialInfo.sprite();
 		final Identifier location = sprite.contents().name();
-		final Identifier emissiveLocation = location.withSuffix("_glowtone_emissive");
 
-		final Material.Baked emissiveMaterial = modelBakery.materials().get(new Material(emissiveLocation), () -> "generated item");
-		if (emissiveMaterial == null || emissiveMaterial.sprite().contents().name().equals(MissingTextureAtlasSprite.getLocation())) return;
+		final Material.Baked emissiveMaterial = GlowtoneConstants.findEmissiveVariant(
+			location,
+			emissiveLocation -> modelBakery.materials().get(new Material(emissiveLocation), () -> "generated item"),
+			candidate -> candidate != null && !candidate.sprite().contents().name().equals(MissingTextureAtlasSprite.getLocation())
+		);
+		if (emissiveMaterial == null) return;
 
 		final BakedQuad.MaterialInfo emissiveMaterialInfo = interner.materialInfo(
 			BakedQuad.MaterialInfo.of(

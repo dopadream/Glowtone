@@ -18,6 +18,7 @@
 package net.frozenblock.glowtone.mixin.client;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import net.frozenblock.glowtone.GlowtoneConstants;
 import net.minecraft.client.resources.model.sprite.MaterialBaker;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Mixin;
@@ -34,7 +35,7 @@ public class MaterialBakerMixin {
 		)
 	)
 	private static boolean glowtone$ignoreEmissiveLoggingA(Logger instance, String string, Object object1, Object object2) {
-		if (object2 instanceof String object2String) return !object2String.endsWith("_glowtone_emissive");
+		if (object2 instanceof String object2String) return !GlowtoneConstants.isEmissivePath(object2String);
 		return true;
 	}
 
@@ -46,7 +47,7 @@ public class MaterialBakerMixin {
 		)
 	)
 	private static boolean glowtone$ignoreEmissiveLoggingB(Logger instance, String string, Object object1, Object object2) {
-		if (object2 instanceof String object2String) return !object2String.endsWith("_glowtone_emissive");
+		if (object2 instanceof String object2String) return !GlowtoneConstants.isEmissivePath(object2String);
 		return true;
 	}
 }

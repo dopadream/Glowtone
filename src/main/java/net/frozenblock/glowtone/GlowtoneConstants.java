@@ -17,13 +17,20 @@
 
 package net.frozenblock.glowtone;
 
+import java.util.function.Function;
+import java.util.function.Predicate;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.ApiStatus;
+import org.jspecify.annotations.Nullable;
 
 @ApiStatus.Internal
 public final class GlowtoneConstants {
 	public static final String PROJECT_ID = "Glowtone";
 	public static final String MOD_ID = "glowtone";
+
+	public static final String EMISSIVE_SUFFIX = "_glowtone_emissive";
+	public static final String EMISSIVE_SUFFIX_SHORT = "_ge";
+	public static final String[] EMISSIVE_SUFFIXES = {EMISSIVE_SUFFIX, EMISSIVE_SUFFIX_SHORT};
 
 	public static boolean GLOWTONE_REPLACEMENTS = false;
 	public static boolean GLOWTONE_SHADING = false;
@@ -38,6 +45,22 @@ public final class GlowtoneConstants {
 
 	public static String safeString(String path) {
 		return id(path).toString().replace(":", "_");
+	}
+
+	public static boolean isEmissivePath(String path) {
+		for (String suffix : EMISSIVE_SUFFIXES) {
+			if (path.endsWith(suffix)) return true;
+		}
+		return false;
+	}
+
+	@Nullable
+	public static <T> T findEmissiveVariant(Identifier baseLocation, Function<Identifier, T> lookup, Predicate<T> isValid) {
+		for (String suffix : EMISSIVE_SUFFIXES) {
+			final T candidate = lookup.apply(baseLocation.withSuffix(suffix));
+			if (isValid.test(candidate)) return candidate;
+		}
+		return null;
 	}
 
 	private GlowtoneConstants() {}

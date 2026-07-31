@@ -84,11 +84,14 @@ public class TerrainParticleMixin implements GlowtoneEmissiveParticle, GlowtoneP
 		this.glowtone$lightEmission = base[1];
 
 		final Identifier location = sprite.contents().name();
-		final Identifier emissiveLocation = location.withSuffix("_glowtone_emissive");
 		final TextureAtlas atlas = (TextureAtlas) Minecraft.getInstance().getTextureManager().getTexture(sprite.atlasLocation());
-		final TextureAtlasSprite candidate = atlas.getSprite(emissiveLocation);
+		final TextureAtlasSprite candidate = GlowtoneConstants.findEmissiveVariant(
+			location,
+			atlas::getSprite,
+			candidateSprite -> !candidateSprite.contents().name().equals(MissingTextureAtlasSprite.getLocation())
+		);
 
-		if (!candidate.contents().name().equals(MissingTextureAtlasSprite.getLocation())) {
+		if (candidate != null) {
 			this.glowtone$emissiveSprite = candidate;
 			this.glowtone$emissiveLayer = SingleQuadParticle.Layer.bySprite(candidate);
 
@@ -125,7 +128,7 @@ public class TerrainParticleMixin implements GlowtoneEmissiveParticle, GlowtoneP
 			final EmissiveMetadataSection emissiveMetadata = optionalEmissiveMetadata.get();
 			shade = emissiveMetadata.shade().orElse(shade);
 			lightEmission = emissiveMetadata.lightEmission();
-		} else if (contents.name().getPath().endsWith("_glowtone_emissive")) {
+		} else if (GlowtoneConstants.isEmissivePath(contents.name().getPath())) {
 			lightEmission = 15;
 		} else {
 			lightEmission = 0;
